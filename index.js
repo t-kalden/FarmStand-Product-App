@@ -18,6 +18,9 @@ app.set('views', path.join(__dirname), 'views');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+
+const categories = ['fruit', 'vegetables', 'dairy'];
+
 ///route to display all products from mongoDB 
 app.get('/products', async (req, res) => {
     const products = await Product.find({});
@@ -26,10 +29,10 @@ app.get('/products', async (req, res) => {
 
 //route to render form to add new product to mongoDB
 app.get('/products/new', (req,res) => {
-    res.render('views/products/new.ejs');
+    res.render('views/products/new.ejs', {categories});
 })
 
-//adding new product to mongoDB
+//adding NEW product to mongoDB
 app.post('/products', async (req,res) => {
     const newProduct = new Product(req.body);
     await newProduct.save();
