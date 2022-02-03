@@ -7,7 +7,7 @@
     <title>All Products</title>
 </head>
 <body>
-    <h1>All Products</h1>
+    <h1><%= category %>  Products</h1>
     <ul>
         <% for(let p of products) {%>
             <li>
@@ -16,6 +16,8 @@
         <% } %> 
     </ul>
     <a href="/products/new">Add Product</a>
-
+    <% if(category !== 'all') {%> 
+    <a href="/products">All Products</a>
+    <% } %> 
 </body>
 </html>

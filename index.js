@@ -23,8 +23,15 @@ const categories = ['fruit', 'vegetables', 'dairy'];
 
 ///route to display all products from mongoDB 
 app.get('/products', async (req, res) => {
-    const products = await Product.find({});
-    res.render('views/products/index.ejs', {products});
+    const {category} = req.query;
+    if(category) {
+        const products = await Product.find({category});
+        res.render('views/products/index', {products, category});
+    } else {
+        const products = await Product.find({});
+        res.render('views/products/index.ejs', {products, category:"all"});
+    }
+    
 })
 
 //route to render form to add new product to mongoDB
@@ -64,6 +71,8 @@ app.delete('/products/:id', async(req,res) => {
     await Product.findByIdAndDelete(id);
     res.redirect(`/products`);
 })
+
+
 app.listen(3000, ()=> {
     console.log("APP IS LISTENING ON PORT 3000");
 }) 
